@@ -1,4 +1,3 @@
-import Appbar from "./Appbar"
 import Video from "./ui/VideoComponent"
 
 export default function Banner(){

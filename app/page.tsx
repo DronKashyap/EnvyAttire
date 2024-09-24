@@ -1,5 +1,7 @@
 import  Appbar  from "@/components/Appbar";
 import Banner from "@/components/Banner";
+import Featured from "@/components/Featured";
+import Discount from "@/components/ui/Discount";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { getServerSession } from "next-auth"
 import { signIn } from "next-auth/react";
@@ -14,9 +16,10 @@ export default async function Home() {
 
   return (
     <div>
-      <Appbar />
       <Banner />
-      {JSON.stringify(session)}
+      {/* {JSON.stringify(session)} */}
+      <Featured />
+      <Discount />
     </div>
   );
 }
