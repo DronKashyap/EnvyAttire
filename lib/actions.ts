@@ -1,16 +1,23 @@
 "use server"
 
 import client from "@/db"
+import bcrypt from 'bcrypt';
 
-export async function signup(username: string, password: string) {
-    const user = await client.user.create({
+
+export const signup = async (username: string, password: string) => {
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10); 
+  
+      const user = await client.user.create({
         data: {
-            username: username,
-            password: password
-        }
-    });
-
-    console.log(user.id);
-
-    return "Signed up!"
-}
+          username,
+          password: hashedPassword, 
+        },
+      });
+  
+      return user;
+    } catch (error) {
+      console.error('Error during signup:', error);
+      return null;
+    }
+  };

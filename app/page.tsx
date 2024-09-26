@@ -1,6 +1,7 @@
 import  Appbar  from "@/components/Appbar";
 import Banner from "@/components/Banner";
 import Featured from "@/components/Featured";
+import Homepage from "@/components/Homepage";
 import Discount from "@/components/ui/Discount";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { getServerSession } from "next-auth"
@@ -18,8 +19,8 @@ export default async function Home() {
     <div>
       <Banner />
       {/* {JSON.stringify(session)} */}
-      <Featured />
-      <Discount />
+      {/* adidas brand id:11950 */}
+      <Homepage />
     </div>
   );
 }

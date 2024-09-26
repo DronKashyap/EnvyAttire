@@ -4,8 +4,8 @@ interface VideoProps {
 
 const Video: React.FC<VideoProps> = ({ url }) => {
   return (
-    <div className="flex items-center  justify-center">
-      <video className=" rounded-lg shadow-lg" muted autoPlay loop>
+    <div className="flex static items-center justify-center w-full h-full overflow-hidden">
+      <video className=" object-cover rounded-lg shadow-lg" muted autoPlay loop>
         <source src={url} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
