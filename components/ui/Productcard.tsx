@@ -1,22 +1,30 @@
 import Image from 'next/image';
 
 interface ProductCardProps {
+  id: number;  // Product ID from parent
   price: number;
   imgurl: string;
   name: string;
+  onClick: () => void;  // Click handler for navigation
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, price, imgurl }) => {
-  const absoluteImgUrl = imgurl.startsWith('http') ? imgurl : `https://${imgurl}`;
+const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, imgurl, onClick }) => {
+  const absoluteImgUrl = imgurl && !imgurl.startsWith('http') ? `http://${imgurl}` : imgurl;
+
   return (
-    <div className='flex flex-col  relative h-[500px] p-2 w-[300px]'>
-      <div className='relative  rounded-3xl h-full w-full overflow-hidden'>
+    <div 
+      className='flex flex-col relative h-[500px] p-2 w-[300px] '
+      onClick={() => {
+        console.log("Clicked product ID:", id);  // Ensure the ID is logged correctly
+        onClick();
+      }}
+    >
+      <div className='relative rounded-3xl h-full w-full overflow-hidden'>
         <Image 
-          src={absoluteImgUrl}
+          src={absoluteImgUrl || '/placeholder.png'}
           alt="product" 
           fill
           className="object-cover rounded-md" 
-          
         />
       </div>
       <div className='flex justify-between p-2'> 
@@ -28,6 +36,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, imgurl }) => {
       </button>
     </div>
   );
-}
+};
 
 export default ProductCard;

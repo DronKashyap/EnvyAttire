@@ -1,8 +1,7 @@
 export default function(){
     return(
-        <div>
-            This is an online clothes selling website using ASOS api from rapid api
-            tech stack : Next.js ,  Tailwind CSS , NextAuth, Framer-Motion
+        <div className=" py-10 bg-blue-300">
+           <h1 className="text-black mt-10 justify-center flex"> Welcome to EnvyAttire </h1>
         </div>
     )
 }

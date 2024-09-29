@@ -1,7 +1,7 @@
 import Image from 'next/image';
 function Footer() {
   return (
-    <div className="h-72 bg-slate-800 text-white">
+    <div className="h-72 bg-slate-800 absolute w-full text-white">
       Footer
       <div className='flex justify-between'>
       <Image src="/facebook.png" alt="Cart" width={24} height={24} />

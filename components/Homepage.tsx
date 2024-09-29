@@ -1,6 +1,6 @@
 import Image from 'next/image'; 
 import Video from './ui/VideoComponent';
-// import Featured from './Featured';
+import Featured from './Featured';
 
 function Homepage() {
   return (
@@ -27,7 +27,7 @@ function Homepage() {
     </div>
     </div>
 
-    {/* <Featured brandid={11950} /> */}
+    <Featured brandid={11950} />
 
     {/* shop armani */}
     <div className='flex bg-purple-200 rounded-md h-96'>
@@ -40,7 +40,7 @@ function Homepage() {
         <button className='bg-white px-10 rounded-xl mr-20 mt-10 font-bold hover:scale-125'> Shop </button>
     </div>
 </div>
-{/* <Featured brandid={25595}/> */}
+<Featured brandid={25595}/>
 {/* help with choice */}
 <div className='h-[600px] flex items-center justify-end relative font-serif overflow-hidden'>
         <div>

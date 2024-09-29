@@ -1,45 +1,93 @@
-// import Discount from "@/components/ui/Discount";
-// import { fetchProductsByCategory } from "../../../lib/fetchdata";
+"use client";
 
-// export default async function BrandProductsPage({ params }: { params: { brandId: string } }) {
-//   console.log("Full params object:", params); // Log the entire params object
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ProductCard from '@/components/ui/Productcard';
+import Discount from "@/components/ui/Discount";
+import { fetchProductsByCategory } from "../../../lib/fetchdata";
 
-//   // Correctly use `brandId` from params
-//   const brandId = parseInt(params.brandId, 10);
+interface Product {
+  productId: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+}
 
-//   if (isNaN(brandId)) {
-//     console.error("Invalid brand ID:", params.brandId); // Log invalid brandId
-//     return <p>Invalid brand ID.</p>;
-//   }
+export default function BrandProductsPage({ params }: { params: { brandId: string } }) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 30;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-//   console.log("Fetching products for brandId:", brandId); // Log before API call
+  const brandId = parseInt(params.brandId, 10);
+  const router = useRouter();
 
-//   try {
-//     const products = await fetchProductsByCategory(brandId);
+  useEffect(() => {
+    if (isNaN(brandId)) {
+      setError("Invalid brand ID");
+      return;
+    }
 
-//     console.log("Fetched products:", products); // Log the fetched products data
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const fetchedProducts = await fetchProductsByCategory(brandId);
 
-//     if (!products || products.length === 0) {
-//       console.warn("No products found for brandId:", brandId); // Warn if no products are found
-//       return <p>No products found for this brand.</p>;
-//     }
+        if (!fetchedProducts || fetchedProducts.length === 0) {
+          setError("No products found for this brand.");
+        } else {
+          setProducts(fetchedProducts);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError("Failed to fetch products. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//     return (
-//       <div>
-//         <Discount />
-//         <h1>Products for Brand ID: {brandId}</h1>
-//         <p>Total Products: {products.length}</p>
-//         <ul>
-//           {products.map((product: any) => (
-//             <li key={product.productId}>
-//               <strong>ID:</strong> {product.productId} - <strong>Name:</strong> {product.name}
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     );
-//   } catch (error) {
-//     console.error("Error fetching products for brandId:", brandId, "Error:", error); // Log the error details
-//     return <p>Failed to fetch products. Please try again later.</p>;
-//   }
-// }
+    fetchProducts();
+  }, [brandId]);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  return (
+    <div className='py-16 bg-gradient-to-br from-blue-100 via-green-100 to-purple-100'>
+      <Discount />
+      <div className="grid grid-cols-3 gap-4">
+        {currentProducts.map((product: Product) => (
+          <ProductCard 
+            key={product.productId}  // Use productId here
+            id={product.productId}   // Pass productId to ProductCard
+            name={product.name} 
+            price={product.price} 
+            imgurl={product.imageUrl}
+            onClick={() => {
+              console.log("Navigating to product ID:", product.productId);  // Log productId for debugging
+              router.push(`/products/${product.productId}`);  // Correct productId usage in route
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`mx-2 px-4 py-2 border rounded ${
+              currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
