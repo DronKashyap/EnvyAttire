@@ -10,7 +10,7 @@ datasource db {
 model User {
   id             Int      @id @default(autoincrement())
   username       String   @unique
-  password       String?  // Make this optional to accommodate OAuth users
-  email          String    @unique // Add an email field for OAuth users
+  password       String?  //  optional to accommodate OAuth users
+  email          String    @unique //  email field for OAuth users
   cartproductid  Int[]    
 }

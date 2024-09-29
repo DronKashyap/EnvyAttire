@@ -4,6 +4,7 @@ import BrandsDropdown from "./ui/BrandsDropdown";
 import Image from 'next/image'; 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Appbar() {
     const { data: session } = useSession();
@@ -17,7 +18,9 @@ export default function Appbar() {
             <BrandsDropdown />
             {session ? (
           <>
-           <Image src="/cart.png" alt="Cart" width={24} height={24} />
+             <Link href="/user/cart">
+          <Image src="/cart.png" alt="Cart" width={24} height={24} />
+           </Link>
            <div className='flex'>
            <Image src="/profile.png" alt="Cart" width={24} height={24}  
            onMouseEnter={() => setIsOpen(true)}

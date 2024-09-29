@@ -31,7 +31,7 @@ function ProductPage({ params }: { params: { productId: string } }) {
         if (!fetchedProductdetails) {
           setError("No product found for this ID.");
         } else {
-          setProduct(fetchedProductdetails); // Set the product details
+          setProduct(fetchedProductdetails);
         }
       } catch (error) {
         console.error("Error fetching product details:", error);
@@ -49,11 +49,11 @@ function ProductPage({ params }: { params: { productId: string } }) {
   }
 
   if (!product) {
-    return <div>Loading...</div>; // Show loading state until product data is available
+    return <div>Loading...</div>; 
   }
 
-  const { name, price, description, images } = product; // Adjusted to images
-  const productImage = images[0]?.imageUrl || '/sampleproductpic.jpg'; // Default image fallback
+  const { name, price, description, images } = product; 
+  const productImage = images[0]?.imageUrl || '/sampleproductpic.jpg'; 
 
   return (
     <div className="py-16 flex bg-gradient-to-br from-blue-100 via-green-100 to-purple-100">
@@ -61,8 +61,8 @@ function ProductPage({ params }: { params: { productId: string } }) {
       <div className="relative h-[600px] w-1/2">
         <Image 
           src={productImage.startsWith('http') ? productImage : `http://${productImage}`} 
-          alt={name} // Improved alt text for accessibility
-          layout="fill" // Use layout="fill" to occupy the parent
+          alt={name} 
+          layout="fill" 
           objectFit="contain"
         />
       </div>
@@ -72,7 +72,7 @@ function ProductPage({ params }: { params: { productId: string } }) {
         <h1 className="text-3xl font-bold mb-5">{name}</h1>
         <div 
           className="border-b border-gray-300 pb-2"
-          dangerouslySetInnerHTML={{ __html: description || 'No description available for this product.' }} // Render HTML description
+          dangerouslySetInnerHTML={{ __html: description || 'No description available for this product.' }} 
         />
         <h3 className="text-2xl font-bold mt-7 border-b border-gray-300 pb-2 mb-4">
           Price: ${price}

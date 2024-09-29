@@ -5,7 +5,7 @@ export const fetchCategories = async () => {
     const response = await axios.get('https://asos10.p.rapidapi.com/api/v1/getCategories', {
       headers: {
         'x-rapidapi-host': 'asos10.p.rapidapi.com',
-        'x-rapidapi-key': process.env.NEXT_PUBLIC_DATA_API_KEY,  // Ensure API key is stored in env variables
+        'x-rapidapi-key': process.env.NEXT_PUBLIC_DATA_API_KEY,  
       },
     });
 
@@ -26,7 +26,7 @@ export const fetchCategories = async () => {
   }
 };
 
-// Function to fetch products from getProductList API based on categoryId
+
 export const fetchProductsByCategory = async (categoryId: number) => {
   try {
     const response = await axios.get(`https://asos10.p.rapidapi.com/api/v1/getProductList?categoryId=${categoryId}`, {
@@ -79,7 +79,7 @@ export const fetchProductdetails = async (productId: number) => {
       price: product.price,
       description: product.description,
       images: product.media.images.map((media: any) => ({
-        imageUrl: media.url, // Ensure this is the correct path to the image URL
+        imageUrl: media.url, 
       })),
     };
 

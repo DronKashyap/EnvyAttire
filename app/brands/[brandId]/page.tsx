@@ -61,14 +61,14 @@ export default function BrandProductsPage({ params }: { params: { brandId: strin
       <div className="grid grid-cols-3 gap-4">
         {currentProducts.map((product: Product) => (
           <ProductCard 
-            key={product.productId}  // Use productId here
-            id={product.productId}   // Pass productId to ProductCard
+            key={product.productId}  
+            id={product.productId}   
             name={product.name} 
             price={product.price} 
             imgurl={product.imageUrl}
             onClick={() => {
-              console.log("Navigating to product ID:", product.productId);  // Log productId for debugging
-              router.push(`/products/${product.productId}`);  // Correct productId usage in route
+              console.log("Navigating to product ID:", product.productId);  
+              router.push(`/products/${product.productId}`);  
             }}
           />
         ))}

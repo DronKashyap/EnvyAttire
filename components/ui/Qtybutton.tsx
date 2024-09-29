@@ -2,15 +2,15 @@
 import { useState } from "react";
 
 function QtyButton() {
-  const [num, setNum] = useState(0); // Corrected casing for setNum
+  const [num, setNum] = useState(0);
 
   function increase() {
-    setNum(num + 1); // Use setNum to update the state
+    setNum(num + 1); 
   }
 
   function decrease() {
     if (num > 0) {
-      setNum(num - 1); // Use setNum to update the state
+      setNum(num - 1); 
     }
   }
 

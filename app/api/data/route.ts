@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })),
     }));
 
-    // Send structured data to the client
+    
     res.status(200).json({ brands });
   } catch (error) {
     console.error('Error fetching or processing data:', error);
