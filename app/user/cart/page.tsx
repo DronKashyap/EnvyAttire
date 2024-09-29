@@ -65,24 +65,23 @@ const CartPage = () => {
       ) : (
         <ul>
           {cartItems.map((item, index) => {
-            // Check if the item is null or undefined
+        
             if (!item) {
-              return null; // Skip this iteration if item is invalid
+              return null; 
             }
 
-            // Check if images exists and has at least one item
+            
             const imageUrl = item.images?.length > 0 && item.images[0]?.imageUrl
               ? (item.images[0].imageUrl.startsWith('http')
                 ? item.images[0].imageUrl
                 : `https://${item.images[0].imageUrl}`)
-              : '/placeholder.png'; // Fallback image
+              : '/placeholder.png'; 
 
-            // Check if price exists and is a number
+          
             const price = item?.price && typeof item.price === 'number'
               ? item.price.toFixed(2)
               : 'N/A';
 
-            // Check if name exists
             const itemName = item?.name || 'Unnamed Product';
 
             return (
@@ -92,7 +91,7 @@ const CartPage = () => {
                     src={imageUrl}
                     alt={itemName}
                     width={100}
-                    height={100} // Adjusted height to maintain aspect ratio
+                    height={100}
                     className="object-cover mr-4"
                   />
                   <div>
