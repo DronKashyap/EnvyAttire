@@ -12,16 +12,14 @@ const CartPage = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      if (session && session.user && session.user.email) {
+      if (session?.user?.email) {
         try {
           const res = await fetch(`/api/cart?email=${session.user.email}`);
           const productIds = await res.json();
 
           if (Array.isArray(productIds) && productIds.length > 0) {
             const products = await Promise.all(
-              productIds.map(async (productId: number) => {
-                return await fetchProductdetails(productId);
-              })
+              productIds.map((productId: number) => fetchProductdetails(productId))
             );
             setCartItems(products);
           } else {
@@ -41,7 +39,7 @@ const CartPage = () => {
   }, [session]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   if (!session || !session.user) {
@@ -61,33 +59,45 @@ const CartPage = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold">Your Cart</h1>
-      <h2>Number of items in cart: {cartItems.length}</h2>
+      <h2 className="mb-4">Number of items in cart: {cartItems.length}</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <ul>
-          {cartItems.map(item => {
-            
-            const imageUrl = item?.images?.[0]?.imageUrl?.startsWith('http')
-              ? item.images[0].imageUrl
-              : `https://${item.images?.[0]?.imageUrl || 'placeholder.png'}`;
+          {cartItems.map((item, index) => {
+            // Check if the item is null or undefined
+            if (!item) {
+              return null; // Skip this iteration if item is invalid
+            }
 
-        
-            const price = typeof item.price === 'number' ? item.price.toFixed(2) : 'N/A';
+            // Check if images exists and has at least one item
+            const imageUrl = item.images?.length > 0 && item.images[0]?.imageUrl
+              ? (item.images[0].imageUrl.startsWith('http')
+                ? item.images[0].imageUrl
+                : `https://${item.images[0].imageUrl}`)
+              : '/placeholder.png'; // Fallback image
+
+            // Check if price exists and is a number
+            const price = item?.price && typeof item.price === 'number'
+              ? item.price.toFixed(2)
+              : 'N/A';
+
+            // Check if name exists
+            const itemName = item?.name || 'Unnamed Product';
 
             return (
-              <li key={item.productId} className="flex justify-between py-2">
+              <li key={item.productId || index} className="flex justify-between py-2">
                 <div className="flex items-center">
                   <Image
                     src={imageUrl}
-                    alt={item.name || 'Product Image'}
+                    alt={itemName}
                     width={100}
-                    height={200}
+                    height={100} // Adjusted height to maintain aspect ratio
                     className="object-cover mr-4"
                   />
                   <div>
-                    <h2 className="font-semibold">{item.name}</h2>
-                    <p>${price}</p>
+                    <h2 className="font-semibold">{itemName}</h2>
+                    <p className="text-lg">${price}</p>
                   </div>
                 </div>
               </li>
@@ -95,8 +105,13 @@ const CartPage = () => {
           })}
         </ul>
       )}
-      <div className='flex justify-center'>
-      <button className=' px-2 py-36 text-white font-bold bg-blue-500' onClick={()=> alert("payment gateway coming soon! Stay tuned")}> Place order! </button> 
+      <div className="flex justify-center mt-6">
+        <button
+          className="px-4 py-2 text-white font-bold bg-blue-500 rounded"
+          onClick={() => alert('Payment gateway coming soon! Stay tuned')}
+        >
+          Place Order!
+        </button>
       </div>
     </div>
   );
