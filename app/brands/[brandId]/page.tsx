@@ -58,21 +58,27 @@ export default function BrandProductsPage({ params }: { params: { brandId: strin
   return (
     <div className='py-16 bg-gradient-to-br from-blue-100 via-green-100 to-purple-100'>
       <Discount />
-      <div className="grid grid-cols-3 gap-4">
-        {currentProducts.map((product: Product) => (
-          <ProductCard 
-            key={product.productId}  
-            id={product.productId}   
-            name={product.name} 
-            price={product.price} 
-            imgurl={product.imageUrl}
-            onClick={() => {
-              console.log("Navigating to product ID:", product.productId);  
-              router.push(`/products/${product.productId}`);  
-            }}
-          />
-        ))}
-      </div>
+
+      {loading && <div className="text-center">Loading products...</div>}
+      {error && <div className="text-red-500 text-center">{error}</div>}
+
+      {!loading && !error && (
+        <div className="grid grid-cols-3 gap-4">
+          {currentProducts.map((product: Product) => (
+            <ProductCard 
+              key={product.productId}  
+              id={product.productId}   
+              name={product.name} 
+              price={product.price} 
+              imgurl={product.imageUrl}
+              onClick={() => {
+                console.log("Navigating to product ID:", product.productId);  
+                router.push(`/products/${product.productId}`);  
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
       <div className="flex justify-center mt-4">

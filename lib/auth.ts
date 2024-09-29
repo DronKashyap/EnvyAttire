@@ -61,7 +61,7 @@ export const NEXT_AUTH_CONFIG = {
       }
       return session;
     },
-    async signIn({ user, account, profile }: any) {
+    async signIn({ account, profile }: any) {
       if (account.provider === 'google' || account.provider === 'github') {
         const existingUser = await client.user.findUnique({
           where: { email: profile.email }, 

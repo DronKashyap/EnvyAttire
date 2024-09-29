@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { fetchProductdetails } from '@/lib/fetchdata';
 
 const CartPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
