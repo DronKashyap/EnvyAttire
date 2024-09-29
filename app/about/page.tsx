@@ -1,4 +1,4 @@
-export default function(){
+const AboutPage = () => {
     return(
         <div className=" py-10 bg-blue-300">
            <h1 className="text-black mt-10 justify-center flex"> Welcome to EnvyAttire </h1>
@@ -6,3 +6,4 @@ export default function(){
         </div>
     )
 }
+export default AboutPage;
